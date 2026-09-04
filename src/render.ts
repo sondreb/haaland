@@ -14,10 +14,54 @@ import {
   type RecordTag,
 } from './data';
 
+import { photoUrl, photos, stintPhoto, type Photo } from './photos';
+
 const esc = (s: string) =>
   s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] as string);
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T | null;
+
+/* ---------------------------------------------------------------- photos */
+function credit(p: Photo) {
+  return `<a class="photo__credit" href="${esc(p.source)}" target="_blank" rel="noopener noreferrer" title="Photo: ${esc(p.author)} · ${esc(p.license)} · via Wikimedia Commons">© ${esc(p.author)} · ${esc(p.license)}</a>`;
+}
+
+/** A responsive, lazily loaded figure with caption and licence credit. */
+export function figure(p: Photo, opts: { className?: string; eager?: boolean; sizes?: string; caption?: boolean } = {}) {
+  const { className = '', eager = false, caption = true } = opts;
+  const lowRes = p.lowRes ? ' photo--lowres' : '';
+  return `
+    <figure class="photo ${className}${lowRes}" data-photo="${p.id}">
+      <div class="photo__frame">
+        ${p.lowRes ? `<img class="photo__blur" src="${photoUrl(p)}" alt="" aria-hidden="true" loading="lazy" decoding="async" />` : ''}
+        <img src="${photoUrl(p)}" alt="${esc(p.alt)}" width="${p.w}" height="${p.h}" loading="${eager ? 'eager' : 'lazy'}" decoding="async" ${eager ? 'fetchpriority="high"' : ''} style="object-position:${p.focus ?? '50% 50%'}" />
+      </div>
+      ${caption ? `<figcaption class="photo__caption"><span>${esc(p.caption)}</span>${credit(p)}</figcaption>` : ''}
+    </figure>`;
+}
+
+function mount(id: string, html: string) {
+  const el = $(id);
+  if (el) el.innerHTML = html;
+}
+
+export function renderPhotos() {
+  mount('hero-photo', figure(photos.hero, { eager: true }));
+  mount('norway-photos', figure(photos.norwayBack, { className: 'photo--tall' }) + figure(photos.norwayRain, { className: 'photo--tall' }));
+  mount('anatomy-photo', figure(photos.anatomy, { className: 'photo--wide' }));
+  mount('offpitch-photo', figure(photos.offpitch, { className: 'photo--wide' }));
+  mount('follow-photo', figure(photos.smile, { className: 'photo--portrait' }));
+
+  const credits = $('photo-credits');
+  if (credits) {
+    credits.innerHTML = Object.values(photos)
+      .map(
+        (p) =>
+          `<li><a href="${esc(p.source)}" target="_blank" rel="noopener noreferrer">${esc(p.caption)}</a> — ${esc(p.author)}, <a href="${esc(p.licenseUrl)}" target="_blank" rel="noopener noreferrer">${esc(p.license)}</a>, via Wikimedia Commons</li>`,
+      )
+      .join('');
+  }
+}
 
 /* ---------------------------------------------------------------- numbers */
 export function renderStats() {
@@ -68,7 +112,10 @@ export function renderJourney() {
         <span class="stint__dot" aria-hidden="true"></span>
         <div class="stint__inner">
           <div class="stint__visual">
-            <div class="stint__year">${s.from}</div>
+            <div class="stint__media">
+              ${figure(stintPhoto[s.id], { className: 'photo--stint' })}
+              <div class="stint__year">${s.from}</div>
+            </div>
             <div class="stint__club">${esc(s.club)}</div>
             <div class="stint__years">${esc(s.years)} · ${esc(s.country)}</div>
             <div class="stint__stats">
@@ -274,6 +321,7 @@ export function renderFollow() {
 }
 
 export function renderAll() {
+  renderPhotos();
   renderStats();
   renderJourney();
   renderRecords();

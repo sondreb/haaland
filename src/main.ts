@@ -23,11 +23,25 @@ function initHero() {
   tl.to(letters, { opacity: 1, y: 0, rotateX: 0, duration: 1.4, stagger: 0.07, delay: 0.2 });
   tl.add(() => document.querySelectorAll('.hero .reveal').forEach((el, i) => setTimeout(() => el.classList.add('is-in'), i * 120)), '-=0.9');
 
-  // Subtle parallax on the title
+  // Portrait wipes in alongside the type
+  const frame = document.querySelector('.hero__photo .photo__frame');
+  const frameImg = document.querySelector('.hero__photo .photo__frame img');
+  if (frame && frameImg && !reduced) {
+    tl.from(frame, { clipPath: 'inset(0 0 100% 0)', duration: 1.5, ease: 'expo.inOut' }, 0.35);
+    tl.from(frameImg, { scale: 1.18, duration: 2.2, ease: 'power3.out' }, 0.35);
+  }
+
+  // Subtle parallax on the title and a slower drift on the portrait
   if (!reduced) {
-    gsap.to('.hero__inner', {
+    gsap.to('.hero__copy', {
       yPercent: -18,
       opacity: 0.2,
+      ease: 'none',
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true },
+    });
+    gsap.to('.hero__photo', {
+      yPercent: -8,
+      opacity: 0.35,
       ease: 'none',
       scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true },
     });
@@ -128,6 +142,35 @@ function initReveals() {
       ease: 'power3.out',
       scrollTrigger: { trigger: el, start: 'top 92%', once: true },
     });
+  });
+
+  // Photographs wipe open and settle as they scroll into view
+  gsap.utils.toArray<HTMLElement>('.photo').forEach((fig) => {
+    if (fig.closest('.hero')) return;
+    const frame = fig.querySelector('.photo__frame');
+    const img = fig.querySelector('.photo__frame img:not(.photo__blur)');
+    if (!frame || !img) return;
+    gsap.from(frame, {
+      clipPath: 'inset(8% 6% 8% 6%)',
+      opacity: 0,
+      duration: reduced ? 0 : 1.2,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: fig, start: 'top 85%', once: true },
+    });
+    gsap.from(img, {
+      scale: 1.15,
+      duration: reduced ? 0 : 1.8,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: fig, start: 'top 85%', once: true },
+    });
+    // Slow drift inside wide banners while they cross the viewport
+    if (fig.classList.contains('photo--wide') && !reduced) {
+      gsap.fromTo(
+        img,
+        { yPercent: -6 },
+        { yPercent: 6, ease: 'none', scrollTrigger: { trigger: fig, start: 'top bottom', end: 'bottom top', scrub: true } },
+      );
+    }
   });
 
   // Generic count-up for any .count element with data-target

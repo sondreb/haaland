@@ -14,6 +14,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+    <link rel="preload" as="image" href="/img/hero.jpg" fetchpriority="high" />
+    <meta property="og:image" content="https://sondreb.github.io/haaland/img/hero.jpg" />
   </head>
   <body>
     <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
@@ -42,29 +44,32 @@
         <canvas id="aurora" class="hero__aurora" aria-hidden="true"></canvas>
         <div class="hero__grain" aria-hidden="true"></div>
         <div class="hero__inner">
-          <p class="hero__eyebrow reveal">Erling Braut Haaland · Striker · No. 9 · <svg class="flag" viewBox="0 0 22 16" aria-label="Norway"><rect width="22" height="16" fill="#ba0c2f"/><rect x="6" width="4" height="16" fill="#fff"/><rect y="6" width="22" height="4" fill="#fff"/><rect x="7" width="2" height="16" fill="#00205b"/><rect y="7" width="22" height="2" fill="#00205b"/></svg></p>
-          <h1 class="hero__title" aria-label="Haaland">
-            <span class="hero__letters" aria-hidden="true">
-              <span>H</span><span>A</span><span>A</span><span>L</span><span>A</span><span>N</span><span>D</span>
-            </span>
-          </h1>
-          <p class="hero__tagline reveal">
-            <em>Born in Leeds. Made in Bryne. Feared everywhere.</em>
-          </p>
-          <div class="hero__ticker reveal" role="list">
-            <div class="tick" role="listitem">
-              <span class="tick__value" id="tick-goals">0</span>
-              <span class="tick__label">career club goals</span>
-            </div>
-            <div class="tick" role="listitem">
-              <span class="tick__value" id="tick-intl">0</span>
-              <span class="tick__label">goals for Norway</span>
-            </div>
-            <div class="tick tick--wide" role="listitem">
-              <span class="tick__value tick__value--mono" id="tick-age">—</span>
-              <span class="tick__label">years old, and counting</span>
+          <div class="hero__copy">
+            <p class="hero__eyebrow reveal">Erling Braut Haaland · Striker · No. 9 · <svg class="flag" viewBox="0 0 22 16" aria-label="Norway"><rect width="22" height="16" fill="#ba0c2f"/><rect x="6" width="4" height="16" fill="#fff"/><rect y="6" width="22" height="4" fill="#fff"/><rect x="7" width="2" height="16" fill="#00205b"/><rect y="7" width="22" height="2" fill="#00205b"/></svg></p>
+            <h1 class="hero__title" aria-label="Haaland">
+              <span class="hero__letters" aria-hidden="true">
+                <span>H</span><span>A</span><span>A</span><span>L</span><span>A</span><span>N</span><span>D</span>
+              </span>
+            </h1>
+            <p class="hero__tagline reveal">
+              <em>Born in Leeds. Made in Bryne. Feared everywhere.</em>
+            </p>
+            <div class="hero__ticker reveal" role="list">
+              <div class="tick" role="listitem">
+                <span class="tick__value" id="tick-goals">0</span>
+                <span class="tick__label">career club goals</span>
+              </div>
+              <div class="tick" role="listitem">
+                <span class="tick__value" id="tick-intl">0</span>
+                <span class="tick__label">goals for Norway</span>
+              </div>
+              <div class="tick tick--wide" role="listitem">
+                <span class="tick__value tick__value--mono" id="tick-age">—</span>
+                <span class="tick__label">years old, and counting</span>
+              </div>
             </div>
           </div>
+          <div class="hero__photo" id="hero-photo"></div>
         </div>
         <a class="hero__scroll" href="#numbers" aria-label="Scroll to the numbers">
           <span class="hero__scroll-ball">⚽</span>
@@ -124,6 +129,8 @@
           <h2 class="section__title">The greatest Norwegian <em>ever to lace boots</em></h2>
           <p class="section__lead">Eligible for England, he only ever wanted Norway. In 2024 he broke a scoring record that had stood since 1937 — then dragged his country to its first World Cup in 28 years and its best finish ever.</p>
 
+          <div class="norway__photos" id="norway-photos"></div>
+
           <div class="norway__grid">
             <div class="norway__chart-wrap">
               <h3 class="sub">International goals by year</h3>
@@ -153,6 +160,7 @@
         <div class="container">
           <p class="section__eyebrow">07 — Anatomy of a striker</p>
           <h2 class="section__title">1.95 metres of <em>inevitability</em></h2>
+          <div class="anatomy__photo" id="anatomy-photo"></div>
           <div class="anatomy__grid">
             <div class="pitch-wrap" id="pitch"></div>
             <div class="traits" id="traits"></div>
@@ -183,6 +191,8 @@
         <div class="container">
           <p class="section__eyebrow">09 — Off the pitch</p>
           <h2 class="section__title">Viking, rapper, farmer, <em>meme</em></h2>
+          <p class="section__lead">Seventy-seven million Instagram followers, a Snapchat vlog, a cowboy hat and a 400-year-old book. Everyone wants a piece of the nine.</p>
+          <div class="offpitch__photo" id="offpitch-photo"></div>
           <div class="curio-grid" id="curio-grid"></div>
         </div>
       </section>
@@ -195,8 +205,14 @@
       <!-- FOLLOW -->
       <section class="section follow" id="follow">
         <div class="container">
-          <p class="section__eyebrow">10 — Follow the nine</p>
-          <h2 class="section__title">Everywhere <em>Erling is</em></h2>
+          <div class="follow__head">
+            <div>
+              <p class="section__eyebrow">10 — Follow the nine</p>
+              <h2 class="section__title">Everywhere <em>Erling is</em></h2>
+              <p class="section__lead">Official channels only — no fan accounts, no fakes. Plus the stats pages worth bookmarking.</p>
+            </div>
+            <div class="follow__photo" id="follow-photo"></div>
+          </div>
           <div class="social-grid" id="social-grid"></div>
           <h3 class="sub sub--big">Career, stats & official pages</h3>
           <ul class="links" id="career-links"></ul>
@@ -209,6 +225,11 @@
         <p class="footer__big">HAALAND</p>
         <p>An unofficial fan tribute. Not affiliated with Erling Haaland, Manchester City, the NFF or any partner. Facts compiled from public sources (Wikipedia, Premier League, UEFA, NBC Sports) — data as of <span id="footer-date"></span>.</p>
         <p><a href="https://github.com/sondreb/haaland" rel="noopener">Source on GitHub</a> · Built with Vite, TypeScript & GSAP · Hosted on GitHub Pages</p>
+        <details class="footer__credits">
+          <summary>Photo credits</summary>
+          <p>All photographs are from <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener noreferrer">Wikimedia Commons</a> and used under Creative Commons licences. Thank you to the photographers.</p>
+          <ul id="photo-credits"></ul>
+        </details>
       </div>
     </footer>
 

@@ -118,6 +118,39 @@ ul { margin: 0; padding: 0; list-style: none; }
 .chart-controls { display: flex; flex-wrap: wrap; gap: 8px; margin: 2rem 0 1.5rem; }
 
 /* ------------------------------------------------------------------
+   Photographs (Wikimedia Commons, CC licensed — credit always shown)
+------------------------------------------------------------------- */
+.photo { margin: 0; position: relative; }
+.photo__frame {
+  position: relative; overflow: hidden; border-radius: var(--radius);
+  background: var(--bg-2); border: 1px solid var(--panel-border); isolation: isolate;
+}
+.photo__frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.photo__caption {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem 1rem; flex-wrap: wrap;
+  margin-top: 0.65rem; font-size: 0.74rem; color: var(--muted); line-height: 1.4;
+}
+.photo__credit { color: var(--muted); text-decoration: none; opacity: 0.75; white-space: nowrap; }
+.photo__credit:hover { color: var(--text); text-decoration: underline; opacity: 1; }
+.photo--tall .photo__frame { aspect-ratio: 4 / 5; }
+.photo--wide .photo__frame { aspect-ratio: 21 / 9; }
+.photo--portrait .photo__frame { aspect-ratio: 1; border-radius: 50%; }
+.photo--portrait .photo__caption { justify-content: center; text-align: center; }
+@media (max-width: 700px) { .photo--wide .photo__frame { aspect-ratio: 4 / 3; } }
+
+/* Very small archive files: blurred fill behind a contained, framed print. */
+.photo--lowres .photo__blur { inset: -12%; width: 124%; height: 124%; filter: blur(28px) saturate(1.3); opacity: 0.9; }
+.photo--lowres img:not(.photo__blur) {
+  inset: 9%; width: 82%; height: 82%; object-fit: cover; border-radius: 10px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.15);
+  image-rendering: auto;
+}
+.photo--lowres .photo__frame::before {
+  content: 'Archive · low resolution'; position: absolute; z-index: 2; left: 12px; top: 12px;
+  font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700;
+  color: rgba(255,255,255,0.75); background: rgba(0,0,0,0.4); padding: 4px 8px; border-radius: 999px; backdrop-filter: blur(6px);
+}
+/* ------------------------------------------------------------------
    Hero
 ------------------------------------------------------------------- */
 .hero {
@@ -131,14 +164,26 @@ ul { margin: 0; padding: 0; list-style: none; }
   animation: grain 1.2s steps(6) infinite;
 }
 @keyframes grain { 0%{transform:translate(0,0)} 20%{transform:translate(-3%,2%)} 40%{transform:translate(2%,-4%)} 60%{transform:translate(-1%,3%)} 80%{transform:translate(3%,1%)} 100%{transform:translate(0,0)} }
-.hero__inner { text-align: center; width: min(1400px, 100%); padding: 0 1rem; }
-.hero__eyebrow { letter-spacing: 0.3em; text-transform: uppercase; font-size: 0.8rem; color: var(--muted); font-weight: 600; margin-bottom: 1rem; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.5em; }
+.hero__inner {
+  width: min(1600px, calc(100% - 2.5rem)); display: grid; grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(2rem, 4vw, 4rem); align-items: center; text-align: left;
+}
+.hero__copy { min-width: 0; }
+.hero__photo { position: relative; width: clamp(280px, min(66svh * 0.75, 34vw), 900px); justify-self: end; }
+.hero__photo .photo__frame { aspect-ratio: 3 / 4; border-radius: 28px; box-shadow: 0 40px 100px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.08); }
+.hero__photo .photo__frame::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(7,9,15,0) 55%, rgba(7,9,15,0.55) 100%), radial-gradient(120% 80% at 50% 0%, rgba(108,171,221,0.18), transparent 60%);
+}
+.hero__photo .photo__caption { position: absolute; left: 1.1rem; right: 1.1rem; bottom: 1rem; margin: 0; color: rgba(244,242,236,0.85); }
+.hero__photo .photo__credit { color: rgba(244,242,236,0.7); }
+.hero__eyebrow { letter-spacing: 0.3em; text-transform: uppercase; font-size: 0.8rem; color: var(--muted); font-weight: 600; margin-bottom: 1rem; display: flex; flex-wrap: wrap; align-items: center; gap: 0.5em; }
 .flag { width: 22px; height: 16px; border-radius: 2px; display: inline-block; vertical-align: middle; box-shadow: 0 0 0 1px rgba(255,255,255,0.15); }
 .hero__title { font-family: var(--font-display); font-weight: 400; line-height: 0.85; }
-.hero__letters { display: flex; justify-content: center; }
+.hero__letters { display: flex; }
 .hero__letters span {
   display: inline-block;
-  font-size: clamp(4.2rem, 24vw, 19rem);
+  font-size: clamp(4.2rem, 13.5vw, 12rem);
   letter-spacing: -0.02em;
   color: var(--text);
   opacity: 0; transform: translateY(60px) rotateX(40deg);
@@ -150,7 +195,17 @@ ul { margin: 0; padding: 0; list-style: none; }
 .hero__tagline { font-family: var(--font-serif); font-size: clamp(1.3rem, 2.6vw, 2.1rem); color: var(--text); margin-top: 1.5rem; }
 .hero__tagline em { color: var(--muted); }
 .hero__ticker {
-  display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 2.6rem;
+  display: flex; flex-wrap: wrap; gap: 12px; margin-top: 2.6rem;
+}
+@media (max-width: 900px) {
+  .hero { padding-top: 5.5rem; }
+  .hero__inner { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
+  .hero__photo { order: -1; width: min(100%, 420px, 52svh * 0.8); justify-self: center; }
+  .hero__photo .photo__frame { aspect-ratio: 4 / 5; border-radius: 22px; }
+  .hero__photo .photo__caption > span { display: none; }
+  .hero__photo .photo__caption { justify-content: flex-end; }
+  .hero__eyebrow, .hero__letters, .hero__ticker { justify-content: center; }
+  .hero__letters span { font-size: clamp(4.2rem, 19vw, 9rem); }
 }
 .tick {
   flex: 1 1 170px; max-width: 260px; padding: 14px 20px; border-radius: 14px;
@@ -210,12 +265,23 @@ ul { margin: 0; padding: 0; list-style: none; }
   display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;
 }
 .stint:nth-child(even) .stint__inner > .stint__text { order: 2; }
-.stint__year {
-  font-family: var(--font-display); font-size: clamp(5rem, 16vw, 15rem); line-height: 0.85;
-  color: transparent; -webkit-text-stroke: 1.5px var(--stint-accent, var(--accent));
-  opacity: 0.9; letter-spacing: -0.02em; user-select: none;
+.stint__media { position: relative; }
+.photo--stint .photo__frame { aspect-ratio: 4 / 5; }
+.photo--stint .photo__frame::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(4,7,12,0) 45%, rgba(4,7,12,0.7) 100%);
 }
-.stint__club { font-family: var(--font-display); text-transform: uppercase; font-size: clamp(1.8rem, 3.6vw, 3rem); line-height: 1; margin-top: 0.5rem; }
+.photo--stint .photo__caption { position: absolute; right: 0.9rem; top: 0.8rem; margin: 0; z-index: 2; justify-content: flex-end; }
+.photo--stint .photo__credit { color: rgba(255,255,255,0.8); background: rgba(0,0,0,0.4); padding: 4px 8px; border-radius: 999px; backdrop-filter: blur(6px); opacity: 1; }
+.photo--stint .photo__caption > span { display: none; }
+.stint__year {
+  position: absolute; left: -0.04em; bottom: -0.12em; z-index: 1; pointer-events: none;
+  font-family: var(--font-display); font-size: clamp(5rem, 11vw, 10.5rem); line-height: 0.85;
+  color: rgba(4,7,12,0.35); -webkit-text-stroke: 1.5px var(--stint-accent, var(--accent));
+  letter-spacing: -0.02em; user-select: none;
+  filter: drop-shadow(0 8px 30px rgba(0,0,0,0.5));
+}
+.stint__club { font-family: var(--font-display); text-transform: uppercase; font-size: clamp(1.8rem, 3.6vw, 3rem); line-height: 1; margin-top: 1.6rem; }
 .stint__years { color: var(--muted); font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; font-size: 0.78rem; margin-top: 0.5rem; }
 .stint__headline { font-family: var(--font-serif); font-style: italic; font-size: clamp(1.6rem, 3vw, 2.4rem); color: var(--stint-accent, var(--accent)); margin-bottom: 1rem; }
 .stint__story { color: var(--text); opacity: 0.85; max-width: 55ch; }
@@ -292,7 +358,9 @@ ul { margin: 0; padding: 0; list-style: none; }
    Norway
 ------------------------------------------------------------------- */
 .norway { --accent: #ff4d6d; background: radial-gradient(ellipse at 20% 0%, rgba(186,12,47,0.25), transparent 55%), radial-gradient(ellipse at 90% 100%, rgba(0,32,91,0.5), transparent 55%); }
-.norway__grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 3rem; margin-top: 3rem; align-items: start; }
+.norway__photos { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 3rem; max-width: 860px; }
+.norway__photos .photo:nth-child(2) { transform: translateY(2.5rem); }
+.norway__grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 3rem; margin-top: 5.5rem; align-items: start; }
 .mini-chart svg { width: 100%; height: auto; aspect-ratio: 2 / 1; overflow: visible; }
 .norway__facts { display: grid; gap: 12px; }
 .fact { padding: 1.1rem 1.3rem; border-radius: 14px; background: var(--panel); border: 1px solid var(--panel-border); display: flex; gap: 1rem; align-items: baseline; }
@@ -336,6 +404,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 /* ------------------------------------------------------------------
    Anatomy
 ------------------------------------------------------------------- */
+.anatomy__photo { margin-top: 2.5rem; }
 .anatomy__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem; align-items: center; }
 .pitch-wrap svg { width: 100%; height: auto; }
 .pitch-wrap .zone { animation: pulse 2.4s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
@@ -360,6 +429,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 /* ------------------------------------------------------------------
    Off the pitch
 ------------------------------------------------------------------- */
+.offpitch__photo { margin-top: 2.5rem; }
 .curio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-top: 3rem; }
 .curio {
   padding: 1.5rem; border-radius: var(--radius); background: var(--panel); border: 1px solid var(--panel-border);
@@ -367,7 +437,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .curio:hover { transform: translateY(-4px) rotate(-0.5deg); background: rgba(255,255,255,0.07); }
 .curio__emoji { font-size: 2.2rem; line-height: 1; margin-bottom: 0.9rem; display: block; }
-.curio h3 { font-family: var(--font-display); text-transform: uppercase; font-size: 1.3rem; letter-spacing: 0.02em; margin-bottom: 0.4rem; }
+.curio h3 { font-family: var(--font-body); font-weight: 600; font-size: 1.08rem; line-height: 1.3; letter-spacing: -0.005em; margin-bottom: 0.45rem; color: var(--text); }
 .curio p { color: var(--muted); font-size: 0.93rem; }
 
 /* ------------------------------------------------------------------
@@ -388,6 +458,12 @@ ul { margin: 0; padding: 0; list-style: none; }
 /* ------------------------------------------------------------------
    Follow
 ------------------------------------------------------------------- */
+.follow__head { display: grid; grid-template-columns: 1fr 240px; gap: 3rem; align-items: center; }
+.follow__photo { width: 240px; }
+@media (max-width: 760px) {
+  .follow__head { grid-template-columns: 1fr; gap: 2rem; }
+  .follow__photo { width: 180px; }
+}
 .social-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-top: 3rem; }
 .social {
   --brand: var(--accent);
@@ -414,6 +490,12 @@ ul { margin: 0; padding: 0; list-style: none; }
 .footer__inner { display: grid; gap: 1rem; max-width: 70ch; }
 .footer__big { font-family: var(--font-display); font-size: clamp(3rem, 12vw, 9rem); line-height: 0.9; color: rgba(255,255,255,0.06); letter-spacing: -0.02em; }
 .footer a { color: var(--text); }
+.footer__credits summary { cursor: pointer; font-weight: 600; color: var(--text); }
+.footer__credits summary:hover { text-decoration: underline; }
+.footer__credits p { margin-top: 0.8rem; }
+.footer__credits ul { margin-top: 0.8rem; display: grid; gap: 6px; font-size: 0.8rem; }
+.footer__credits li { padding-left: 1.4rem; position: relative; }
+.footer__credits li::before { content: '📷'; position: absolute; left: 0; top: 0; font-size: 0.8rem; }
 
 /* ------------------------------------------------------------------
    Meditation mode
