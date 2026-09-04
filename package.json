@@ -16,7 +16,7 @@
   },
   "keywords": ["haaland", "football", "tribute", "manchester-city", "norway"],
   "license": "Unlicense",
-  "homepage": "https://sondreb.github.io/haaland/",
+  "homepage": "https://haaland.brainbox.no/",
   "devDependencies": {
     "typescript": "^7.0.2",
     "vite": "^8.2.2"

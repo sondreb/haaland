@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite';
 
-// GitHub Pages serves project sites from /<repo>/. Override with VITE_BASE
-// (e.g. "/") when deploying to a custom domain or user site.
-const base = process.env.VITE_BASE ?? (process.env.NODE_ENV === 'production' ? '/haaland/' : '/');
+// The site is served from the root of a custom domain (haaland.brainbox.no).
+// Override with VITE_BASE (e.g. "/haaland/") to deploy as a GitHub project page.
+const base = process.env.VITE_BASE ?? '/';
 
 export default defineConfig({
   base,

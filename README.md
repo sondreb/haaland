@@ -2,7 +2,7 @@
 
 An interactive, fully static web experience celebrating Erling Braut Haaland: the journey from Bryne to Manchester, the records, the trophies, Norway's 2026 World Cup run, the man behind the meditation celebration — and a penalty shoot-out you will lose.
 
-**Live:** https://sondreb.github.io/haaland/
+**Live:** https://haaland.brainbox.no/
 
 ## What's inside
 
@@ -37,7 +37,7 @@ npm run build     # type-check + production build into dist/
 npm run preview   # serve the production build locally
 ```
 
-The production build uses `/haaland/` as its base path (GitHub project page). Override with `VITE_BASE=/ npm run build` for a custom domain or user site.
+The site is served from the root of the custom domain `haaland.brainbox.no` (`public/CNAME`), so the base path is `/`. To deploy as a GitHub project page instead, build with `VITE_BASE=/haaland/ npm run build` and remove the CNAME file.
 
 ## Data
 
