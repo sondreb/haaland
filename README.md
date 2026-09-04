@@ -1,2 +1,51 @@
-# haaland
-Tribute and Exploration of all Erling Braut Haaland
+# HAALAND — a tribute to Erling Braut Haaland
+
+An interactive, fully static web experience celebrating Erling Braut Haaland: the journey from Bryne to Manchester, the records, the trophies, Norway's 2026 World Cup run, the man behind the meditation celebration — and a penalty shoot-out you will lose.
+
+**Live:** https://sondreb.github.io/haaland/
+
+## What's inside
+
+- **Aurora hero** — a Northern Lights canvas animation (pure 2D canvas, no images) under giant typography, with live counters and an age clock ticking to the second.
+- **The numbers** — animated career stats that count up as you scroll.
+- **The journey** — five chapters (Bryne, Molde, Salzburg, Dortmund, City). The whole page re-colours itself to each club's palette as you scroll.
+- **Season chart** — goals per season across all competitions, league-only, or appearances. Hover for detail.
+- **The record book** — 20 flip-cards of records, filterable by competition.
+- **Braut Haaland** — international goals by year and the 2026 World Cup run, match by match.
+- **The cabinet** — team honours and 20 individual awards.
+- **Anatomy of a striker** — pitch heat zones and what makes him unstoppable.
+- **Beat the keeper** — a canvas penalty mini-game. The keeper learns your favourite corner.
+- **Off the pitch** — Flow Kingz, the 1594 Viking chronicle, cows, cowboy hats, 91 Peruvian babies.
+- **Meditation mode** — press the 🧘 in the nav. Breathe.
+- **Follow** — links to every official channel and stats page.
+- Type `999` anywhere for a small surprise.
+
+## Tech
+
+- [Vite](https://vitejs.dev) + TypeScript, no framework
+- [GSAP](https://gsap.com) + ScrollTrigger for scroll choreography
+- Hand-rolled SVG charts and 2D canvas — zero image assets, zero server
+- Deployed to GitHub Pages via GitHub Actions on every push to `main`
+
+## Develop
+
+```bash
+npm install
+npm run dev       # http://localhost:5173
+npm run build     # type-check + production build into dist/
+npm run preview   # serve the production build locally
+```
+
+The production build uses `/haaland/` as its base path (GitHub project page). Override with `VITE_BASE=/ npm run build` for a custom domain or user site.
+
+## Data
+
+All facts live in [`src/data.ts`](src/data.ts). Club stats are current to 28 August 2026; international stats to the 2026 World Cup quarter-final (11 July 2026). Sources: Wikipedia, Premier League, UEFA, NBC Sports. To update after a match, edit the numbers there — everything else re-renders.
+
+## Disclaimer
+
+An unofficial fan tribute. Not affiliated with Erling Haaland, Manchester City, the Norwegian FA or any commercial partner.
+
+## License
+
+Public domain ([Unlicense](LICENSE)).

@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HAALAND — A tribute to Erling Braut Haaland</title>
+    <meta name="description" content="An interactive tribute to Erling Braut Haaland: the goals, the records, the journey from Bryne to Manchester, Norway's World Cup run, and the man behind the meditation celebration." />
+    <meta name="theme-color" content="#07090f" />
+    <meta property="og:title" content="HAALAND — A tribute to Erling Braut Haaland" />
+    <meta property="og:description" content="319 club goals. 62 for Norway. One meditation celebration. Explore the story of the most devastating striker of his generation." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2307090f'/%3E%3Ctext x='32' y='47' text-anchor='middle' font-family='Impact,Anton,sans-serif' font-size='44' fill='%236cabdd'%3E9%3C/text%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+
+    <header class="nav" id="nav">
+      <a class="nav__brand" href="#top" aria-label="Back to top">
+        <span class="nav__nine">9</span><span class="nav__name">HAALAND</span>
+      </a>
+      <nav class="nav__links" aria-label="Sections">
+        <a href="#numbers">Numbers</a>
+        <a href="#journey">Journey</a>
+        <a href="#seasons">Seasons</a>
+        <a href="#records">Records</a>
+        <a href="#norway">Norway</a>
+        <a href="#trophies">Trophies</a>
+        <a href="#play">Play</a>
+        <a href="#offpitch">Off the pitch</a>
+        <a href="#follow">Follow</a>
+      </nav>
+      <button class="nav__zen" id="zen-toggle" type="button" title="Meditation mode">🧘</button>
+    </header>
+
+    <main id="top">
+      <!-- HERO -->
+      <section class="hero" id="hero">
+        <canvas id="aurora" class="hero__aurora" aria-hidden="true"></canvas>
+        <div class="hero__grain" aria-hidden="true"></div>
+        <div class="hero__inner">
+          <p class="hero__eyebrow reveal">Erling Braut Haaland · Striker · No. 9 · <svg class="flag" viewBox="0 0 22 16" aria-label="Norway"><rect width="22" height="16" fill="#ba0c2f"/><rect x="6" width="4" height="16" fill="#fff"/><rect y="6" width="22" height="4" fill="#fff"/><rect x="7" width="2" height="16" fill="#00205b"/><rect y="7" width="22" height="2" fill="#00205b"/></svg></p>
+          <h1 class="hero__title" aria-label="Haaland">
+            <span class="hero__letters" aria-hidden="true">
+              <span>H</span><span>A</span><span>A</span><span>L</span><span>A</span><span>N</span><span>D</span>
+            </span>
+          </h1>
+          <p class="hero__tagline reveal">
+            <em>Born in Leeds. Made in Bryne. Feared everywhere.</em>
+          </p>
+          <div class="hero__ticker reveal" role="list">
+            <div class="tick" role="listitem">
+              <span class="tick__value" id="tick-goals">0</span>
+              <span class="tick__label">career club goals</span>
+            </div>
+            <div class="tick" role="listitem">
+              <span class="tick__value" id="tick-intl">0</span>
+              <span class="tick__label">goals for Norway</span>
+            </div>
+            <div class="tick tick--wide" role="listitem">
+              <span class="tick__value tick__value--mono" id="tick-age">—</span>
+              <span class="tick__label">years old, and counting</span>
+            </div>
+          </div>
+        </div>
+        <a class="hero__scroll" href="#numbers" aria-label="Scroll to the numbers">
+          <span class="hero__scroll-ball">⚽</span>
+          <span>Scroll</span>
+        </a>
+      </section>
+
+      <!-- NUMBERS -->
+      <section class="section numbers" id="numbers">
+        <div class="container">
+          <p class="section__eyebrow">01 — The numbers</p>
+          <h2 class="section__title">A goal machine, <em>by the numbers</em></h2>
+          <div class="stat-grid" id="stat-grid"></div>
+          <p class="section__note" id="data-as-of"></p>
+        </div>
+      </section>
+
+      <!-- JOURNEY -->
+      <section class="journey" id="journey">
+        <div class="journey__intro container">
+          <p class="section__eyebrow">02 — The journey</p>
+          <h2 class="section__title">From a cow town on the Norwegian coast <em>to the top of the world</em></h2>
+          <p class="section__lead">Five clubs. Four countries. One straight line towards goal. Keep scrolling — the colours change with him.</p>
+        </div>
+        <div class="journey__track" id="journey-track"></div>
+      </section>
+
+      <!-- SEASONS CHART -->
+      <section class="section seasons" id="seasons">
+        <div class="container">
+          <p class="section__eyebrow">03 — Season by season</p>
+          <h2 class="section__title">Goals, <em>every single year</em></h2>
+          <div class="chart-controls" role="group" aria-label="Chart mode">
+            <button class="chip is-active" data-mode="goals" type="button">All competitions</button>
+            <button class="chip" data-mode="leagueGoals" type="button">League only</button>
+            <button class="chip" data-mode="apps" type="button">Appearances</button>
+          </div>
+          <div class="chart" id="season-chart" role="img" aria-label="Bar chart of Erling Haaland's goals per season"></div>
+          <div class="chart__tooltip" id="chart-tooltip" aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <!-- RECORDS -->
+      <section class="section records" id="records">
+        <div class="container">
+          <p class="section__eyebrow">04 — The record book</p>
+          <h2 class="section__title">Records he didn’t break. <em>Records he rewrote.</em></h2>
+          <div class="chart-controls" id="record-filters" role="group" aria-label="Filter records"></div>
+          <div class="record-grid" id="record-grid"></div>
+        </div>
+      </section>
+
+      <!-- NORWAY -->
+      <section class="section norway" id="norway">
+        <div class="container">
+          <p class="section__eyebrow">05 — Braut Haaland</p>
+          <h2 class="section__title">The greatest Norwegian <em>ever to lace boots</em></h2>
+          <p class="section__lead">Eligible for England, he only ever wanted Norway. In 2024 he broke a scoring record that had stood since 1937 — then dragged his country to its first World Cup in 28 years and its best finish ever.</p>
+
+          <div class="norway__grid">
+            <div class="norway__chart-wrap">
+              <h3 class="sub">International goals by year</h3>
+              <div class="mini-chart" id="intl-chart"></div>
+            </div>
+            <div class="norway__facts" id="norway-facts"></div>
+          </div>
+
+          <h3 class="sub sub--big">World Cup 2026 — the run</h3>
+          <div class="wc-run" id="wc-run"></div>
+        </div>
+      </section>
+
+      <!-- TROPHIES -->
+      <section class="section trophies" id="trophies">
+        <div class="container">
+          <p class="section__eyebrow">06 — The cabinet</p>
+          <h2 class="section__title">Silverware <em>and superlatives</em></h2>
+          <div class="trophy-teams" id="trophy-teams"></div>
+          <h3 class="sub sub--big">Individual honours</h3>
+          <div class="honours" id="honours"></div>
+        </div>
+      </section>
+
+      <!-- ANATOMY -->
+      <section class="section anatomy" id="anatomy">
+        <div class="container">
+          <p class="section__eyebrow">07 — Anatomy of a striker</p>
+          <h2 class="section__title">1.95 metres of <em>inevitability</em></h2>
+          <div class="anatomy__grid">
+            <div class="pitch-wrap" id="pitch"></div>
+            <div class="traits" id="traits"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PLAY -->
+      <section class="section play" id="play">
+        <div class="container">
+          <p class="section__eyebrow">08 — Your turn</p>
+          <h2 class="section__title">Beat the keeper. <em>Score like Erling.</em></h2>
+          <p class="section__lead">He put five past RB Leipzig in 57 minutes. You get 10 penalties. Click or tap where you want to shoot — the keeper reads your body language, so vary it.</p>
+          <div class="game" id="game">
+            <canvas id="game-canvas" width="900" height="560" aria-label="Penalty shootout mini game"></canvas>
+            <div class="game__hud">
+              <span>Goals <strong id="game-goals">0</strong></span>
+              <span>Shots <strong id="game-shots">0</strong> / 10</span>
+              <button class="btn" id="game-reset" type="button">Restart</button>
+            </div>
+            <p class="game__msg" id="game-msg">Click in the goal to shoot.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- OFF THE PITCH -->
+      <section class="section offpitch" id="offpitch">
+        <div class="container">
+          <p class="section__eyebrow">09 — Off the pitch</p>
+          <h2 class="section__title">Viking, rapper, farmer, <em>meme</em></h2>
+          <div class="curio-grid" id="curio-grid"></div>
+        </div>
+      </section>
+
+      <!-- QUOTES -->
+      <section class="quotes" id="quotes">
+        <div class="quotes__track" id="quotes-track"></div>
+      </section>
+
+      <!-- FOLLOW -->
+      <section class="section follow" id="follow">
+        <div class="container">
+          <p class="section__eyebrow">10 — Follow the nine</p>
+          <h2 class="section__title">Everywhere <em>Erling is</em></h2>
+          <div class="social-grid" id="social-grid"></div>
+          <h3 class="sub sub--big">Career, stats & official pages</h3>
+          <ul class="links" id="career-links"></ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__inner">
+        <p class="footer__big">HAALAND</p>
+        <p>An unofficial fan tribute. Not affiliated with Erling Haaland, Manchester City, the NFF or any partner. Facts compiled from public sources (Wikipedia, Premier League, UEFA, NBC Sports) — data as of <span id="footer-date"></span>.</p>
+        <p><a href="https://github.com/sondreb/haaland" rel="noopener">Source on GitHub</a> · Built with Vite, TypeScript & GSAP · Hosted on GitHub Pages</p>
+      </div>
+    </footer>
+
+    <!-- MEDITATION MODE -->
+    <div class="zen" id="zen" aria-hidden="true" role="dialog" aria-label="Meditation mode">
+      <button class="zen__close" id="zen-close" type="button" aria-label="Exit meditation mode">✕</button>
+      <div class="zen__circle" id="zen-circle"><span>🧘</span></div>
+      <p class="zen__text" id="zen-text">Breathe in</p>
+      <p class="zen__sub">The Haaland celebration, slowed down. Press Esc to leave.</p>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
